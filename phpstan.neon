@@ -4,4 +4,3 @@ parameters:
         - src
     scanFiles:
         - ssr
-        - src/Functions.php

@@ -11,6 +11,6 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 </head>
 <body>
-    <?=SSR::render('Page');?>
+
 </body>
 </html>
