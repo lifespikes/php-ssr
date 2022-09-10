@@ -33,19 +33,14 @@ class React extends Package implements Curable
      */
     public function diagnose(Application $application): array
     {
-        if ($application->packageManager->manifest()->has('typescript')) {
-            $config = json_decode($this->checkTsConfig()->output, true, 512, JSON_THROW_ON_ERROR);
-            $opts = $config['compilerOptions'] ?? [];
-
-            return array_filter([
+        return $this->typeScriptDiagnose($application, function (array $opts) {
+            return [
                 $opts['jsx'] !== 'react-jsx' ? 'JSX is not set to react-jsx' : null,
                 $opts['esModuleInterop'] !== true ? 'esModuleInterop is not set to true' : null,
                 $opts['allowSyntheticDefaultImports'] !== true ? 'allowSyntheticDefaultImports is not set to true' : null,
                 !in_array('dom', $opts['lib'] ?? []) ? 'DOM is not included in lib' : null,
                 !in_array('dom.iterable', $opts['lib'] ?? []) ? 'DOM.iterable is not included in lib' : null,
-            ], fn ($i) => $i !== null);
-        }
-
-        return [];
+            ];
+        });
     }
 }

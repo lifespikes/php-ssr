@@ -2,17 +2,27 @@
 
 namespace LifeSpikes\SSR\BuildTools\Packages;
 
+use JsonException;
 use LifeSpikes\SSR\Application;
-use LifeSpikes\SSR\Enums\InstallType;
 use LifeSpikes\SSR\Contracts\Curable;
-use LifeSpikes\SSR\Contracts\PackageManager;
+use LifeSpikes\PHPNode\Exceptions\NodeInstanceException;
 
 class Parcel extends Package implements Curable
 {
     public string $name = 'parcel';
 
+    /**
+     * @throws NodeInstanceException
+     * @throws JsonException
+     */
     public function diagnose(Application $application): array
     {
-        // TODO: Implement diagnose() method.
+        return $this->typeScriptDiagnose($application, function (array $opts) {
+            return [
+                $opts['isolatedModules'] !== true ? 'isolatedModules is not set to true' : null,
+                isset($opts['baseUrl']) ? 'baseUrl is set, but not supported by Parcel' : null,
+                isset($opts['paths']) ? 'paths is set, but not supported by Parcel' : null
+            ];
+        });
     }
 }
