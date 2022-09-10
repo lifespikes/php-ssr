@@ -7,7 +7,6 @@ class HomePage
     public function render(): string
     {
         return component('Page', [
-            'children' => $this->children()
         ]);
     }
 

@@ -6,7 +6,7 @@
     "autoload": {
       "psr-4": {
         "LifeSpikes\\SSR\\": "src/",
-        "LifeSpikes\\SSRExample\\": "example/"
+        "LifeSpikes\\SSRExample\\": "react/"
       },
       "files": [
         "src/Functions.php"

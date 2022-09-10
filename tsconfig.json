@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "incremental": true,
+    "jsx": "react-jsx",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "experimentalDecorators": true,
+    "isolatedModules": true,
+    "inlineSourceMap": true,
+    "baseUrl": "."
+  },
+
+  "include": [
+    "react/**/*.ts",
+    "react/**/*.tsx"
+  ]
+}

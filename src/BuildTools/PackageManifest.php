@@ -18,6 +18,9 @@ class PackageManifest
             : [];
     }
 
+    /**
+     * Check presence of a package in the package.json manifest.
+     */
     public function has(string $package, string $version = null, InstallType $type = InstallType::ANY): bool
     {
         $m = $this->manifest;

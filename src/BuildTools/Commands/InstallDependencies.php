@@ -4,8 +4,12 @@ namespace LifeSpikes\SSR\BuildTools\Commands;
 
 use LifeSpikes\SSR\Application;
 use LifeSpikes\SSR\Enums\Signal;
+use LifeSpikes\SSR\Tools\TypeScript;
+use LifeSpikes\SSR\Contracts\Package;
 use LifeSpikes\SSR\Contracts\PackageManager;
+use LifeSpikes\SSR\BuildTools\Packages\React;
 use Symfony\Component\Console\Command\Command;
+use LifeSpikes\SSR\BuildTools\Packages\Parcel;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,21 +20,22 @@ class InstallDependencies extends Command
 {
     protected static $defaultDescription = 'Install and verify frontend dependencies for PHP-SSR';
 
+    /**
+     * @var PackageManager
+     */
     protected PackageManager $manager;
 
     /**
-     * @var array<int, string[]>
+     * @var string[]
      */
     protected array $dependencies;
 
     public function __construct(Application $application)
     {
         parent::__construct();
+
         $this->manager = $application->packageManager;
-        $this->dependencies = [
-            ['react', '^18.2.0'],
-            ['chokidar', '^3.5.3']
-        ];
+        $this->dependencies = [TypeScript::class, React::class, Parcel::class];
     }
 
     /**
@@ -42,7 +47,8 @@ class InstallDependencies extends Command
             $output->writeln('Yarn project already initialized');
         }
 
-        foreach ($this->dependencies as [$package, $version]) {
+        foreach ($this->dependencies as $dependency) {
+            [$package, $version] = $this->getPackage($dependency);
             $output->writeln("Installing - $package@$version");
 
             $this->manager->add($package, $version) === Signal::OK
@@ -51,5 +57,19 @@ class InstallDependencies extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * @param string $packageClass
+     * @return array<string>
+     */
+    private function getPackage(string $packageClass): array
+    {
+        /**
+         * @var Package $dep
+         */
+        $dep = new $packageClass();
+
+        return [$dep->name(), $dep->version()];
     }
 }

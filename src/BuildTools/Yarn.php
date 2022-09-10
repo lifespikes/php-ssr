@@ -3,7 +3,7 @@
 namespace LifeSpikes\SSR\Tools;
 
 use LifeSpikes\SSR\Enums\Signal;
-use LifeSpikes\SSR\Terminal\Process;
+use LifeSpikes\SSR\BuildTools\Process;
 use LifeSpikes\SSR\Contracts\PackageManager;
 use LifeSpikes\SSR\Enums\InstallType;
 use LifeSpikes\PHPNode\Exceptions\NodeInstanceException;
@@ -14,6 +14,14 @@ class Yarn implements PackageManager
         protected Process $yarn = new Process('yarn'),
         protected PackageManifest $manifest = new PackageManifest(),
     ) {
+    }
+
+    /**
+     * @return PackageManifest
+     */
+    public function manifest(): PackageManifest
+    {
+        return $this->manifest;
     }
 
     /**

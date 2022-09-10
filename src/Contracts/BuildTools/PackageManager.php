@@ -4,6 +4,7 @@ namespace LifeSpikes\SSR\Contracts;
 
 use LifeSpikes\SSR\Enums\Signal;
 use LifeSpikes\SSR\Enums\InstallType;
+use LifeSpikes\SSR\Tools\PackageManifest;
 
 interface PackageManager
 {
@@ -30,4 +31,9 @@ interface PackageManager
      * @return Signal
      */
     public function install(InstallType $type = InstallType::DEV): Signal;
+
+    /**
+     * @return PackageManifest
+     */
+    public function manifest(): PackageManifest;
 }

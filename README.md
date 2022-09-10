@@ -169,7 +169,7 @@ class Alert extends SSRComponent
 }
 ```
 
-You could then use this for example:
+You could then use this `Alert` as shown below. Naturally this is just a very simple example, but you can see how this could be a game-changer for a lot of people:
 
 ```php
 # Assume we're still in AuthController@login
@@ -180,4 +180,52 @@ $page->setProps([
 ]);
 ```
 
-### Working with state
+### Working with the state
+State management is something we haven't solidified yet, but we know will be a big part of this project. For the time being, we expect state management through libraries like `zustand` to be the primary way that we send information from the server to the client.
+
+Props to components, like the `Alert` one we made above, would all be stored in a global state. This allows us to keep a single source of truth for the state of the application and its component tree. The state itself would also handle all the internals, like the **component instance IDs** that help us keep server-side and client-side components in sync.
+
+There aren't any code examples for this yet since we don't even know if it'll be used outside internal state management.
+
+### Before we move on
+> **Note:** There are a lot of things we haven't covered yet, some that we know we haven't covered, and some we'll probably realize we also need to cover as we go, so this is by no means a complete list of what the library needs to do.
+
+## Component messaging
+This feature is the primary way the server and the client will communicate. It'll mainly act as transport for state synchronization, then, a client-side library will react to state changes according to the messaging protocol _(Spec TBD)_.
+
+One example is how components are rendered **after** the initial page load. Every component handled by PHP-SSR is dynamically added to the component tree, so we are actually able to mutate not just regular values, but also the component tree itself through those regular values. This pseudocode may give you a better idea of what I mean:
+
+```tsx
+const PhpSsrApp = () => {
+  /* Only react to changes at the top level */
+  const {_children} = usePhpSsr('root');
+  
+  return (
+    <div>
+      {_children.map(ssrComp => (
+        <PhpSsrComponent {...ssrComp} />
+      ))}
+    </div>
+  );
+};
+```
+
+From `PhpSsrApp` forward, everything else is essentially made of component instances in the form of `PhpSsrComponent`, each with their unique ID. Any children are rendered through recursive calls to `PhpSsrComponent`, which will render the component's children as well.
+
+```tsx
+const PhpSsrComponent = ({id, props}) => {
+    /* React to changes at the component level */
+  
+    useEffect(() => {
+      // Only react to comp changes
+    }, [id, props]);
+    
+    return (
+        <div>
+        {children.map(ssrComp => (
+            <PhpSsrComponent {...ssrComp} />
+        ))}
+        </div>
+    );
+};
+```
