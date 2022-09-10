@@ -4,7 +4,7 @@ namespace LifeSpikes\SSR\BuildTools\Packages;
 
 use JsonException;
 use LifeSpikes\SSR\Application;
-use LifeSpikes\SSR\Contracts\Curable;
+use LifeSpikes\SSR\Contracts\BuildTools\Curable;
 use LifeSpikes\PHPNode\Exceptions\NodeInstanceException;
 
 class Parcel extends Package implements Curable

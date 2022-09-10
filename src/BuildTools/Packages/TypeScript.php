@@ -1,10 +1,8 @@
 <?php
 
-namespace LifeSpikes\SSR\Tools;
+namespace LifeSpikes\SSR\BuildTools\Packages;
 
-use LifeSpikes\SSR\Enums\InstallType;
-
-class TypeScript
+class TypeScript extends Package
 {
     public string $name = 'typescript';
 }

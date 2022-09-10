@@ -3,13 +3,10 @@
 namespace LifeSpikes\SSR\BuildTools\Commands;
 
 use LifeSpikes\SSR\Application;
-use LifeSpikes\SSR\Enums\Signal;
-use LifeSpikes\SSR\Tools\TypeScript;
-use LifeSpikes\SSR\Contracts\Package;
-use LifeSpikes\SSR\Contracts\PackageManager;
-use LifeSpikes\SSR\BuildTools\Packages\React;
+use LifeSpikes\SSR\BuildTools\Enums\Signal;
 use Symfony\Component\Console\Command\Command;
-use LifeSpikes\SSR\BuildTools\Packages\Parcel;
+use LifeSpikes\SSR\BuildTools\Enums\InstallType;
+use LifeSpikes\SSR\Contracts\BuildTools\Package;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,22 +17,13 @@ class InstallDependencies extends Command
 {
     protected static $defaultDescription = 'Install and verify frontend dependencies for PHP-SSR';
 
-    /**
-     * @var PackageManager
-     */
-    protected PackageManager $manager;
-
-    /**
-     * @var string[]
-     */
-    protected array $dependencies;
+    protected Application $application;
 
     public function __construct(Application $application)
     {
         parent::__construct();
 
-        $this->manager = $application->packageManager;
-        $this->dependencies = [TypeScript::class, React::class, Parcel::class];
+        $this->application = $application;
     }
 
     /**
@@ -43,17 +31,22 @@ class InstallDependencies extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if ($this->manager->initialize() === Signal::NOOP) {
+        $manager = $this->application->packageManager;
+        $dependencies = $this->application->dependencies;
+
+        if ($manager->initialize() === Signal::NOOP) {
             $output->writeln('Yarn project already initialized');
         }
 
-        foreach ($this->dependencies as $dependency) {
-            [$package, $version] = $this->getPackage($dependency);
+        foreach ($dependencies as $dependency) {
+            [$package, $version, $type, $instance] = $this->getPackage($dependency);
             $output->writeln("Installing - $package@$version");
 
-            $this->manager->add($package, $version) === Signal::OK
+            $manager->add($package, $version, $type) === Signal::OK
                 ? $output->writeln("Added - $package@$version")
                 : $output->writeln("Already installed - $package@$version");
+
+            $instance->afterInstall($manager);
         }
 
         return Command::SUCCESS;
@@ -61,7 +54,7 @@ class InstallDependencies extends Command
 
     /**
      * @param string $packageClass
-     * @return array<string>
+     * @return array{string, string, InstallType, Package}
      */
     private function getPackage(string $packageClass): array
     {
@@ -69,7 +62,6 @@ class InstallDependencies extends Command
          * @var Package $dep
          */
         $dep = new $packageClass();
-
-        return [$dep->name(), $dep->version()];
+        return [$dep->name(), $dep->version(), $dep->type(), $dep];
     }
 }

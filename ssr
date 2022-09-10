@@ -2,16 +2,25 @@
 <?php
 
 use LifeSpikes\SSR\Application;
-use LifeSpikes\SSR\Terminal\Commands\InstallDependencies;
+use LifeSpikes\SSR\BuildTools\Commands\InstallDependencies;
+use LifeSpikes\SSR\BuildTools\Commands\DiagnoseDependencies;
 
 const SSR_APP_ROOT = __DIR__;
 
 require_once 'vendor/autoload.php';
 
 try {
-    ($application = new Application())
-        ->console
-        ->add(new InstallDependencies($application));
+    $console = ($application = new Application())
+        ->console;
+
+    $commands = [
+        new InstallDependencies($application),
+        new DiagnoseDependencies($application),
+    ];
+
+    foreach ($commands as $command) {
+        $console->add($command);
+    }
 
     $application->terminal();
 } catch (Exception $e) {

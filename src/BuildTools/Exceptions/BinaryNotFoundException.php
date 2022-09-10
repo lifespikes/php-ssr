@@ -1,6 +1,6 @@
 <?php
 
-namespace LifeSpikes\SSR\Exceptions;
+namespace LifeSpikes\SSR\BuildTools\Exceptions;
 
 class BinaryNotFoundException extends \Exception
 {

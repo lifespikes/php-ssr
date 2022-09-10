@@ -1,10 +1,10 @@
 <?php
 
-namespace LifeSpikes\SSR\Contracts;
+namespace LifeSpikes\SSR\Contracts\BuildTools;
 
-use LifeSpikes\SSR\Enums\Signal;
-use LifeSpikes\SSR\Enums\InstallType;
-use LifeSpikes\SSR\Tools\PackageManifest;
+use LifeSpikes\SSR\BuildTools\Enums\Signal;
+use LifeSpikes\SSR\BuildTools\PackageManifest;
+use LifeSpikes\SSR\BuildTools\Enums\InstallType;
 
 interface PackageManager
 {

@@ -4,7 +4,7 @@ namespace LifeSpikes\SSR\BuildTools;
 
 use LifeSpikes\PHPNode\Instance;
 use LifeSpikes\PHPNode\FinishedProcess;
-use LifeSpikes\SSR\Exceptions\BinaryNotFoundException;
+use LifeSpikes\SSR\BuildTools\Exceptions\BinaryNotFoundException;
 use LifeSpikes\PHPNode\Exceptions\NodeInstanceException;
 
 class Process

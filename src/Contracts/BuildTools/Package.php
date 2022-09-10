@@ -1,8 +1,8 @@
 <?php
 
-namespace LifeSpikes\SSR\Contracts;
+namespace LifeSpikes\SSR\Contracts\BuildTools;
 
-use LifeSpikes\SSR\Enums\InstallType;
+use LifeSpikes\SSR\BuildTools\Enums\InstallType;
 
 interface Package
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace LifeSpikes\SSR\Tools;
+namespace LifeSpikes\SSR\BuildTools;
 
-use LifeSpikes\SSR\Enums\InstallType;
+use LifeSpikes\SSR\BuildTools\Enums\InstallType;
 
 class PackageManifest
 {

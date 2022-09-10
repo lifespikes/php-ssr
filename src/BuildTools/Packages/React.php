@@ -4,12 +4,8 @@ namespace LifeSpikes\SSR\BuildTools\Packages;
 
 use JsonException;
 use LifeSpikes\SSR\Application;
-use LifeSpikes\SSR\Enums\InstallType;
-use LifeSpikes\SSR\Contracts\Curable;
-use LifeSpikes\SSR\BuildTools\Process;
-use LifeSpikes\PHPNode\FinishedProcess;
-use LifeSpikes\PHPNode\Enums\ProcessStatus;
-use LifeSpikes\SSR\Contracts\PackageManager;
+use LifeSpikes\SSR\Contracts\BuildTools\Curable;
+use LifeSpikes\SSR\Contracts\BuildTools\PackageManager;
 use LifeSpikes\PHPNode\Exceptions\NodeInstanceException;
 
 class React extends Package implements Curable

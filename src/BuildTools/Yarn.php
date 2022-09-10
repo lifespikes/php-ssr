@@ -1,11 +1,10 @@
 <?php
 
-namespace LifeSpikes\SSR\Tools;
+namespace LifeSpikes\SSR\BuildTools;
 
-use LifeSpikes\SSR\Enums\Signal;
-use LifeSpikes\SSR\BuildTools\Process;
-use LifeSpikes\SSR\Contracts\PackageManager;
-use LifeSpikes\SSR\Enums\InstallType;
+use LifeSpikes\SSR\BuildTools\Enums\Signal;
+use LifeSpikes\SSR\BuildTools\Enums\InstallType;
+use LifeSpikes\SSR\Contracts\BuildTools\PackageManager;
 use LifeSpikes\PHPNode\Exceptions\NodeInstanceException;
 
 class Yarn implements PackageManager

@@ -5,12 +5,11 @@ namespace LifeSpikes\SSR\BuildTools\Packages;
 use Closure;
 use JsonException;
 use LifeSpikes\SSR\Application;
-use LifeSpikes\SSR\Enums\InstallType;
 use LifeSpikes\SSR\BuildTools\Process;
-use LifeSpikes\PHPNode\FinishedProcess;
-use LifeSpikes\SSR\Contracts\PackageManager;
-use LifeSpikes\SSR\Contracts\Package as PackageContract;
+use LifeSpikes\SSR\BuildTools\Enums\InstallType;
+use LifeSpikes\SSR\Contracts\BuildTools\PackageManager;
 use LifeSpikes\PHPNode\Exceptions\NodeInstanceException;
+use LifeSpikes\SSR\Contracts\BuildTools\Package as PackageContract;
 
 class Package implements PackageContract
 {

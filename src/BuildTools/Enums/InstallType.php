@@ -1,6 +1,6 @@
 <?php
 
-namespace LifeSpikes\SSR\Enums;
+namespace LifeSpikes\SSR\BuildTools\Enums;
 
 enum InstallType: string
 {
