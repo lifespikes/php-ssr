@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+use LifeSpikes\SSR\Application;
+use LifeSpikes\SSR\Terminal\Commands\InstallDependencies;
+
+const SSR_APP_ROOT = __DIR__;
+
+require_once 'vendor/autoload.php';
+
+try {
+    ($application = new Application())
+        ->console
+        ->add(new InstallDependencies($application));
+
+    $application->terminal();
+} catch (Exception $e) {
+}
