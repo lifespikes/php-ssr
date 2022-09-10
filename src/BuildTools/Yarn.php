@@ -41,6 +41,19 @@ class Yarn implements PackageManager
     /**
      * @throws NodeInstanceException
      */
+    public function addMany(array $packages, InstallType $type = InstallType::DEV): Signal
+    {
+        $packages = array_map(function ($package) {
+            return $package['version'] ? "{$package['package']}@{$package['version']}" : $package['package'];
+        }, $packages);
+
+        $this->yarn('add', $type === InstallType::DEV ? '-D' : null, ...$packages);
+        return Signal::OK;
+    }
+
+    /**
+     * @throws NodeInstanceException
+     */
     public function initialize(): Signal
     {
         if (!file_exists(SSR_APP_ROOT . '/package.json')) {

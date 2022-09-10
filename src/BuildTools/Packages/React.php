@@ -5,22 +5,26 @@ namespace LifeSpikes\SSR\BuildTools\Packages;
 use JsonException;
 use LifeSpikes\SSR\Application;
 use LifeSpikes\SSR\Contracts\BuildTools\Curable;
-use LifeSpikes\SSR\Contracts\BuildTools\PackageManager;
 use LifeSpikes\PHPNode\Exceptions\NodeInstanceException;
 
 class React extends Package implements Curable
 {
     public string $name = 'react';
 
-    public function afterInstall(PackageManager $packageManager): void
+    /**
+     * @throws NodeInstanceException
+     */
+    public function afterInstall(Application $application): void
     {
-        foreach ([
+        $manager = $application->packageManager;
+        $manager->addMany(array_map(fn ($package) => [
+            'package' => $package,
+            'version' => null,
+        ], [
             'react',
             'react-dom',
-            ...($packageManager->manifest()->has('typescript') ? ['@types/react', '@types/react-dom'] : []),
-        ] as $dependency) {
-            $packageManager->add($dependency);
-        }
+            ...($manager->manifest()->has('typescript') ? ['@types/react', '@types/react-dom'] : [])
+        ]));
     }
 
     /**

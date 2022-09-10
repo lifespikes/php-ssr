@@ -23,7 +23,7 @@ class Process
         $this->path = realpath(file_exists($file) ? $file : $this->findInPath($file));
 
         if (!$this->path || !is_executable($this->path)) {
-            throw new BinaryNotFoundException("Unable to spawn process: `{$file}` not found");
+            throw new BinaryNotFoundException("Unable to spawn process: `$file` not found");
         }
     }
 

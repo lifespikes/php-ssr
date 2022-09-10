@@ -7,7 +7,6 @@ use JsonException;
 use LifeSpikes\SSR\Application;
 use LifeSpikes\SSR\BuildTools\Process;
 use LifeSpikes\SSR\BuildTools\Enums\InstallType;
-use LifeSpikes\SSR\Contracts\BuildTools\PackageManager;
 use LifeSpikes\PHPNode\Exceptions\NodeInstanceException;
 use LifeSpikes\SSR\Contracts\BuildTools\Package as PackageContract;
 
@@ -22,7 +21,7 @@ class Package implements PackageContract
         return $this->name;
     }
 
-    public function version(): string
+    public function version(): string|null
     {
         return $this->version;
     }
@@ -32,7 +31,7 @@ class Package implements PackageContract
         return $this->type;
     }
 
-    public function afterInstall(PackageManager $packageManager): void
+    public function afterInstall(Application $application): void
     {
     }
 

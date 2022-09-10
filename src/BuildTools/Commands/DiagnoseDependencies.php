@@ -9,11 +9,12 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'diagnose')]
+#[AsCommand(
+    name: 'diagnose',
+    description: 'Diagnose issues with enabled dependencies'
+)]
 class DiagnoseDependencies extends Command
 {
-    protected static $defaultDescription = 'Diagnose issues with enabled dependencies';
-
     protected Application $application;
 
     public function __construct(Application $application)

@@ -7,10 +7,7 @@
       "psr-4": {
         "LifeSpikes\\SSR\\": "src/",
         "LifeSpikes\\SSRExample\\": "react/"
-      },
-      "files": [
-        "src/Functions.php"
-      ]
+      }
     },
     "authors": [
         {

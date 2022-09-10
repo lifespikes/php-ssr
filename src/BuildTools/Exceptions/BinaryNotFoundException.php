@@ -2,7 +2,9 @@
 
 namespace LifeSpikes\SSR\BuildTools\Exceptions;
 
-class BinaryNotFoundException extends \Exception
+use Exception;
+
+class BinaryNotFoundException extends Exception
 {
 
 }

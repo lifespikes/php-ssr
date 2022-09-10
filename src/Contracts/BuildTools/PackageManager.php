@@ -25,6 +25,13 @@ interface PackageManager
     public function add(string $package, string $version = null, InstallType $type = InstallType::DEV): Signal;
 
     /**
+     * @param array<int, array{package: string, version: string|null}> $packages
+     * @param InstallType $type
+     * @return Signal
+     */
+    public function addMany(array $packages, InstallType $type = InstallType::DEV): Signal;
+
+    /**
      * Install all dependencies using the package manager.
      *
      * @param InstallType $type
