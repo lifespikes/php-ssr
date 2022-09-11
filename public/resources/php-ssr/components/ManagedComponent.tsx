@@ -1,6 +1,6 @@
 import {SsrComponent} from '../types/tree';
 import {PhpSsrStore} from '../usePhpSsrStore';
-import React, {Fragment} from 'react';
+import React, {Fragment, useMemo} from 'react';
 
 type ManagedComponentProps = {
   component: SsrComponent,
@@ -9,7 +9,9 @@ type ManagedComponentProps = {
 
 const ManagedComponent = ({ component, resolver }: ManagedComponentProps) => {
   const componentModule = resolver(component.name);
-  const element = React.createElement(componentModule, component.props);
+  const element = useMemo(() => {
+    return React.createElement(componentModule, component.props);
+  }, [component.props]);
 
   return (
     <Fragment key={component.id}>
