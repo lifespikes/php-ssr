@@ -1,3 +1,9 @@
+<?php
+
+require_once '../vendor/autoload.php';
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div id="app"></div>
-    <script src="dist/App.js"></script>
+<?php echo (new LifeSpikes\SSRExample\App())->boot(); ?>
 </body>
 </html>

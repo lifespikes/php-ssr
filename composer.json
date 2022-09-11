@@ -21,7 +21,8 @@
         "lifespikes/php-node": "dev-master",
         "symfony/console": "6.2.x-dev",
         "mck89/peast": "^1.14",
-        "spatie/file-system-watcher": "^1.1"
+        "spatie/file-system-watcher": "^1.1",
+        "ext-dom": "*"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.8"

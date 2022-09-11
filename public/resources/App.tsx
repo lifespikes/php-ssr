@@ -20,9 +20,7 @@ setTimeout(() => {
       {
         id: '1',
         name: 'Page',
-        props: {
-          title: 'Hello World'
-        }
+        props: {}
       }
     ]
   });
