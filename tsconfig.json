@@ -13,7 +13,6 @@
     "experimentalDecorators": true,
     "isolatedModules": true,
     "inlineSourceMap": true,
-    "baseUrl": "."
   },
 
   "include": [

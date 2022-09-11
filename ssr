@@ -10,9 +10,7 @@ const SSR_APP_ROOT = __DIR__;
 require_once 'vendor/autoload.php';
 
 try {
-    $console = ($application = new Application())
-        ->console;
-
+    $console = ($application = new Application())->console;
     $commands = [
         new InstallDependencies($application),
         new DiagnoseDependencies($application),

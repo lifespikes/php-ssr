@@ -9,38 +9,34 @@ use LifeSpikes\SSR\BuildTools\Enums\InstallType;
 interface PackageManager
 {
     /**
-     * Initialize files required for the package manager.
+     * Initialize anything required by the package manager
      * @return Signal
      */
     public function initialize(): Signal;
 
     /**
-     * Install a package using the package manager.
-     *
-     * @param string $package Package name
-     * @param string|null $version Version constraint
-     * @param InstallType $type
+     * @param string $package Package name as it appears on the registry
+     * @param string|null $version Version constraint or null if latest compatible version
+     * @param InstallType $type Specify if this is a dev or production dependency
      * @return Signal
      */
     public function add(string $package, string $version = null, InstallType $type = InstallType::DEV): Signal;
 
     /**
-     * @param array<int, array{package: string, version: string|null}> $packages
-     * @param InstallType $type
+     * @param array<int, array{package: string, version: string|null}> $packages Packages with versions to install
+     * @param InstallType $type Add as a dev or production dependency
      * @return Signal
      */
     public function addMany(array $packages, InstallType $type = InstallType::DEV): Signal;
 
     /**
-     * Install all dependencies using the package manager.
-     *
-     * @param InstallType $type
+     * @param InstallType $type Should we include dev dependencies?
      * @return Signal
      */
     public function install(InstallType $type = InstallType::DEV): Signal;
 
     /**
-     * @return PackageManifest
+     * @return PackageManifest Current package manifest
      */
     public function manifest(): PackageManifest;
 }

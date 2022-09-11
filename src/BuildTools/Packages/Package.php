@@ -3,7 +3,6 @@
 namespace LifeSpikes\SSR\BuildTools\Packages;
 
 use Closure;
-use JsonException;
 use LifeSpikes\SSR\Application;
 use LifeSpikes\SSR\BuildTools\Process;
 use LifeSpikes\SSR\BuildTools\Enums\InstallType;
@@ -38,19 +37,17 @@ class Package implements PackageContract
     /**
      * @return array{compilerOptions: array<string, mixed>, include: array<string, mixed>}
      * @throws NodeInstanceException
-     * @throws JsonException
      */
     protected function checkTsConfig(): array
     {
         $process = new Process('tsc');
-        return json_decode($process('--showConfig')->output, true, 512, JSON_THROW_ON_ERROR);
+        return $process('--showConfig')->output;
     }
 
     /**
      * @param Application $application
      * @param Closure $diagnoseFn
      * @return string[]
-     * @throws JsonException
      * @throws NodeInstanceException
      */
     protected function typeScriptDiagnose(Application $application, Closure $diagnoseFn): array
