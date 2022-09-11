@@ -13,3 +13,8 @@
 # Dependencies
 node_modules
 vendor
+
+# Build artifacts
+dist
+react/dist/
+.parcel-cache

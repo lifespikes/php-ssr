@@ -3,16 +3,14 @@ export interface RemoteListener {
   listener: (event: Event) => void;
 }
 
-export type SsrComponentProps = (
-  Record<string, unknown> &
-  Record<`on${string}`, RemoteListener> &
-  Record<'children', SsrComponent | SsrComponent[]>
-)
-
 export interface SsrComponent {
   id: string;
   name: string;
-  props: SsrComponentProps;
+  props: {
+    [key: string]: any;
+    [key: `on${string}`]: RemoteListener;
+    children?: SsrComponent[];
+  };
 }
 
 export interface Tree {

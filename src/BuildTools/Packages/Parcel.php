@@ -12,8 +12,9 @@ class Parcel extends Package implements Curable
     public string $name = 'parcel';
 
     /**
+     * @param Application $application
+     * @return string[]
      * @throws NodeInstanceException
-     * @throws JsonException
      */
     public function diagnose(Application $application): array
     {

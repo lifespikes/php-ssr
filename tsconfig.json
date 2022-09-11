@@ -16,7 +16,7 @@
   },
 
   "include": [
-    "react/**/*.ts",
-    "react/**/*.tsx"
+    "public/**/*.ts",
+    "public/**/*.tsx"
   ]
 }
