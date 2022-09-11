@@ -1,3 +1,5 @@
+import {Attributes} from 'react';
+
 export interface RemoteListener {
   id: string;
   listener: (event: Event) => void;
@@ -6,10 +8,9 @@ export interface RemoteListener {
 export interface SsrComponent {
   id: string;
   name: string;
-  props: {
-    [key: string]: any;
+  props: Attributes & {
     [key: `on${string}`]: RemoteListener;
-    children?: SsrComponent[];
+    _children?: SsrComponent[];
   };
 }
 

@@ -1,9 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import PhpSsrProvider from './php-ssr/components/PhpSsrProvider';
 import usePhpSsrStore from './php-ssr/usePhpSsrStore';
+// @ts-ignore
+import * as allComponents from './components/*.tsx';
 
-const resolver = async (module) => {
-  return await import(`./${module}`);
+const resolver = (module) => {
+  return allComponents[module].default;
 };
 
 createRoot(document.getElementById('app'))
@@ -24,4 +26,4 @@ setTimeout(() => {
       }
     ]
   });
-}, 10000);
+}, 1000);

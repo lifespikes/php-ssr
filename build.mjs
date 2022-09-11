@@ -13,10 +13,21 @@
 
 import {Parcel} from '@parcel/core';
 import {fileURLToPath} from 'url';
-import chokidar from 'chokidar';
-import * as fs from 'fs';
 
-let ignoreNextWatcherEvent = false;
+const fixHmr = (bundle) => {
+  const patterns = [
+    [/HMR_PORT\s=\s3000/gm, 'HMR_PORT = "443/parcel-ws"'],
+    [/HMR_SECURE\s=\sfalse/gm, 'HMR_SECURE = true']
+  ];
+
+  for (let [pattern, replacement] of patterns) {
+    if (pattern.test(bundle)) {
+      bundle = bundle.replaceAll(pattern, replacement);
+    }
+  }
+
+  return bundle;
+};
 
 let bundler = new Parcel({
   entries: './public/resources/App.tsx',
@@ -36,30 +47,3 @@ let bundler = new Parcel({
 });
 
 await bundler.watch();
-
-chokidar.watch('./public/dist/App.js').on('change', () => {
-  let bundle = fs.readFileSync('./public/dist/App.js', 'utf8');
-  let matches = 0;
-
-  const patterns = [
-    [/HMR_PORT\s=\s3000/gm, 'HMR_PORT = "443/parcel-ws"'],
-    [/HMR_SECURE\s=\sfalse/gm, 'HMR_SECURE = true']
-  ];
-
-  for (let [pattern, replacement] of patterns) {
-    if (pattern.test(bundle)) {
-      bundle = bundle.replaceAll(pattern, replacement);
-      matches++;
-    }
-  }
-
-  if (matches > 0) {
-    console.log('Rewriting HMR stubs...');
-
-    setTimeout(() => {
-      fs.writeFileSync('./public/dist/App.js', bundle);
-    }, 500);
-
-    console.log('HMR stubs rewritten.');
-  }
-});
